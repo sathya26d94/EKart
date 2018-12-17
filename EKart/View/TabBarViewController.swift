@@ -13,17 +13,15 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let firstViewController = UIViewController()
+        let categoryViewController = CategoryViewController()
+        categoryViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 0)
+        let categoryNVC = UINavigationController.init(rootViewController: categoryViewController)
         
-        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
+        let cartViewController = CartViewController()
+        cartViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 1)
+        let cartNVC = UINavigationController.init(rootViewController: cartViewController)
         
-        let secondViewController = UIViewController()
-        
-        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
-        
-        let tabBarList = [firstViewController, secondViewController]
-        
-        viewControllers = tabBarList
+        viewControllers = [categoryNVC, cartNVC]
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,6 +29,4 @@ class TabBarViewController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-
-
 }

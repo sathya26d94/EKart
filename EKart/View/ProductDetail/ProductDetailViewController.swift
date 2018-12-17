@@ -9,22 +9,29 @@
 import UIKit
 
 class ProductDetailViewController: UIViewController {
-
+    @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var price: UILabel!
+    @IBOutlet weak var cartButton: UIButton!
+    
+    var productDetailViewModel: ProductDetailViewModel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        renderUI()
+    }
+    
+    func renderUI() {
+        guard let productDetailViewModel = self.productDetailViewModel else {
+            return
+        }
+        name.text = productDetailViewModel.name
+        price.text = productDetailViewModel.price
+        productImageView.cacheImage(urlString: productDetailViewModel.imageURL)
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func cartButtonTouched(_ sender: Any) {
+        productDetailViewModel.addToCart()
     }
-    */
-
 }

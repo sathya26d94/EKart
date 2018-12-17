@@ -13,7 +13,7 @@ struct Product: Codable {
     var name: String
     var imageUrl: String
     var categoryId: Int
-    var price: String
+    var price: Int
     
     enum codingkeys: String, CodingKey {
         case imageUrl = "image_url"

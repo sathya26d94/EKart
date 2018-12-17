@@ -14,7 +14,7 @@ class CategoryViewController: UIViewController {
     
     let CategoryCellReuseId = "CategoryCellReuseId"
     
-    var categoryViewModel: CategoryViewModel!
+    let categoryViewModel: CategoryViewModel = CategoryViewModel()
 
     lazy var wireFrame: CategoryWireFrame = {
        return CategoryWireFrame()
@@ -22,14 +22,22 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CategoryCellReuseId)
+        definesPresentationContext = true
         
+        tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: CategoryCellReuseId)
         tableView.separatorColor = UIColor.black
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
         
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = "Categories"
+        categoryViewModel.delegate = self
+        categoryViewModel.fetchCategoires()
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,11 +65,12 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCellReuseId, for: indexPath)
+        let cell: CategoryTableViewCell = tableView.dequeueReusableCell(withIdentifier: CategoryCellReuseId, for: indexPath) as! CategoryTableViewCell
         
         let category = categoryViewModel.categoriesList[indexPath.row]
         
-        cell.textLabel?.text = category.name
+        cell.titleLabel.text = category.name
+        cell.categoryImageView.cacheImage(urlString: category.imageUrl)
         cell.tag = category.id
         
         return cell
@@ -72,7 +81,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: false)
         
         let category = categoryViewModel.categoriesList[indexPath.row]
-        wireFrame.presentProductsInterface(category: category)
+        wireFrame.presentProductsInterface(fromController: self, category: category)
         
     }
     

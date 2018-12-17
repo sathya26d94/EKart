@@ -6,4 +6,13 @@
 //  Copyright © 2018 sathiyamoorthy N. All rights reserved.
 //
 
-import Foundation
+import UIKit
+class ProductWireFrame {
+    var productDetailViewController: ProductDetailViewController?
+    
+    func presentProductDetailInterface(fromController: UIViewController, product: Product) {
+        productDetailViewController = ProductDetailViewController()
+        productDetailViewController?.productDetailViewModel = ProductDetailViewModel.init(product: product)
+        fromController.navigationController?.pushViewController(productDetailViewController!, animated: true)
+    }
+}

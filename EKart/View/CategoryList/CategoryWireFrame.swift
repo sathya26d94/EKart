@@ -10,9 +10,13 @@ import Foundation
 import UIKit
 
 class CategoryWireFrame {
-//    var searchViewController: SearchViewController?
+    var productListViewController: ProductListViewController?
     
-    func presentProductsInterface(category: Category){
+    func presentProductsInterface(fromController: UIViewController, category: Category){
+        
+        productListViewController = ProductListViewController()
+        productListViewController?.productViewModel = ProductViewModel.init(category: category)
+        fromController.navigationController?.pushViewController(productListViewController!, animated: true)
         
     }
 }
