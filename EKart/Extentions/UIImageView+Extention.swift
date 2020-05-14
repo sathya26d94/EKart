@@ -34,8 +34,10 @@ extension UIImageView {
             if data != nil {
                 DispatchQueue.main.async {
                     let imageToCache = UIImage(data: data!)
-                    imageCache.setObject(imageToCache!, forKey: urlString as AnyObject)
-                    self.image = imageToCache
+                    if imageToCache != nil {
+                        imageCache.setObject(imageToCache!, forKey: urlString as AnyObject)
+                        self.image = imageToCache
+                    }
                 }
             }
             }.resume()
